@@ -1,7 +1,15 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.prose table {
+  @apply w-full border-collapse;
+}
+.prose th,
+.prose td {
+  @apply border px-4 py-2;
 }
