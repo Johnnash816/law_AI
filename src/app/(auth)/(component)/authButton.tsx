@@ -4,7 +4,7 @@ const AuthButton = ({
   type,
   loading,
 }: {
-  type: "Login" | "Sign up" | "Reset Password" | "Forgot Password";
+  type: "Sign In" | "Sign up" | "Reset Password" | "Forgot Password";
   loading: boolean;
 }) => {
   return (

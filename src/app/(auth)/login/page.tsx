@@ -1,5 +1,5 @@
 import Link from "next/link";
-import LoginForm from "./(component)/loginForm";
+import SignInForm from "@/app/(auth)/login/(component)/signInForm";
 
 const Page = () => {
   return (
@@ -9,7 +9,7 @@ const Page = () => {
           <h1 className="mb-6 w-full text-center text-3xl font-bold">
             Sign in
           </h1>
-          <LoginForm />
+          <SignInForm />
           <div className="mt-2 flex items-center">
             <h1>{`Don't have an account?`}</h1>
             <Link className="ml-2 font-bold" href="/register">

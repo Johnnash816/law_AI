@@ -15,6 +15,8 @@ export const config = {
      * - favicon.ico (favicon file)
      * Feel free to modify this pattern to include more paths.
      */
+    // For now the middleware is protected all pages except for the pages listed in the updateSession function
+    // If not logged in, the user will be redirected to the login page
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
