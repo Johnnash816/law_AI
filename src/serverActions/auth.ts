@@ -92,6 +92,6 @@ export async function signIn(formData: FormData) {
   if (error) {
     return { success: false, error: error.message };
   }
-
+  revalidatePath("/", "layout");
   return { success: true, data: data };
 }

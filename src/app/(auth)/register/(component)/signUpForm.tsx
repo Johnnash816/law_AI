@@ -23,7 +23,8 @@ const SignUpForm = () => {
 
     if (result.success === true) {
       console.log(result.data);
-      router.push("/chat");
+      //TODO: add redirect to email confirmation page if enable email confirmation
+      router.push("/app");
     } else {
       setError(result.error ?? "An error occurred");
     }

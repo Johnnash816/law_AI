@@ -23,7 +23,7 @@ const SignInForm = () => {
     // if the sign up is successful, redirect to the chat page
 
     if (result.success === true) {
-      router.push("/chat");
+      router.push("/app");
     } else {
       setError(result.error ?? "An error occurred");
     }
