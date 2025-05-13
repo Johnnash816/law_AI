@@ -4,15 +4,32 @@ import { useChat } from "@ai-sdk/react";
 import { TextField } from "@mui/material";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
-
+import { createClient } from "@/utils/supabase/client";
+import { useEffect, useState } from "react";
+import { User } from "@supabase/supabase-js";
 // Configure marked to be more secure
 marked.setOptions({
   breaks: true, // Convert line breaks to <br>
   gfm: true, // GitHub Flavored Markdown
 });
 
-export default function Chat() {
+export default function Chat({ username }: { username?: string }) {
+  // vercel supabase sdk
   const { messages, input, handleInputChange, handleSubmit } = useChat();
+  // supabase client
+  const supabase = createClient();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    // get user from supabase
+    const getUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    getUser();
+  }, [user, supabase.auth]);
 
   const renderMessageContent = (message: (typeof messages)[0]) => {
     return message.parts.map((part, i) => {
@@ -34,7 +51,9 @@ export default function Chat() {
 
   return (
     <div className="flex h-screen w-full flex-col">
-      <div className="py-4 text-center text-2xl font-bold">Title</div>
+      <div className="py-4 text-center text-2xl font-bold">
+        Helo {username}{" "}
+      </div>
 
       <div className="overflow-y-auto">
         <div className="mx-auto w-[800px] p-4">
