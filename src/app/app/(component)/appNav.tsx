@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
-import Chat from "./(component)/chat";
+import RouteLocation from "./routeLocation";
 
-export default async function Page() {
+const AppNav = async () => {
   // supabase client
   const supabase = await createClient();
   // get user from supabase
@@ -10,17 +10,20 @@ export default async function Page() {
   } = await supabase.auth.getUser();
 
   // get username from supabase user_profile table
-
   const { data: userProfile } = await supabase
     .from("user_profile")
-    .select("username")
+    .select("email")
     .eq("id", user?.id as string)
     .single();
 
-  // TODO: move this to chat route and add redirect to chat if logged in for login page
   return (
-    <div className="flex h-full w-full">
-      <Chat username={userProfile?.username} />
+    <div className="absolute top-0 flex h-16 w-full border-b-1 border-gray-200 pl-18">
+      <div className="flex w-full items-center justify-between px-8">
+        <RouteLocation />
+        <p>{userProfile?.email}</p>
+      </div>
     </div>
   );
-}
+};
+
+export default AppNav;

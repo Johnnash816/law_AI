@@ -56,7 +56,7 @@ export default function Chat({
   };
 
   return (
-    <div className="flex h-screen w-full flex-col">
+    <div className="flex h-full w-full flex-col">
       <div className="py-4 text-center text-2xl font-bold">
         Helo {username}{" "}
       </div>
