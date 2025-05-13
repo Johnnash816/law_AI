@@ -13,6 +13,29 @@ export async function signUp(formData: FormData) {
     password: formData.get("password") as string,
   };
 
+  // Check if user already exists in user_profile
+  const { data: existingUser, error: checkError } = await supabase
+    .from("user_profile")
+    .select("email")
+    .eq("email", credentials.email)
+    .single();
+
+  if (checkError && checkError.code !== "PGRST116") {
+    // PGRST116 is "no rows returned" error
+    return { success: false, error: "Error checking existing user" };
+  }
+
+  if (existingUser) {
+    return { success: false, error: "Email already registered" };
+  }
+  // if the sign up is successful, redirect to the chat page
+  // If email confirmation is enabled, auth.user will create a user wth waiting for confirmation status
+  // A user will be created in user_profile, there will be no session(not logged in)
+  // When sign up using existing email, auth.signup will not return error, so we need to check explicitly
+
+  // If user confirmation is disabled, auth.user will create a user with a session (logged in)
+  // A user will be created in user_profile
+  // When sign up using existing email, auth.signup will return user exist error
   const { data, error } = await supabase.auth.signUp({
     email: credentials.email,
     password: credentials.password,

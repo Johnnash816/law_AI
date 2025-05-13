@@ -21,12 +21,14 @@ const SignUpForm = () => {
     if (!result) {
       setError("Something went wrong");
     }
-    // if the sign up is successful, redirect to the chat page
+
     if (result.success === true) {
+      console.log(result.data);
       router.push("/chat");
     } else {
       setError(result.error ?? "An error occurred");
     }
+
     setLoading(false);
   };
   return (
