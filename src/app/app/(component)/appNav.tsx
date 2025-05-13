@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import RouteLocation from "./routeLocation";
+import SignOutButton from "./signOutButton";
 
 const AppNav = async () => {
   // supabase client
@@ -20,7 +21,10 @@ const AppNav = async () => {
     <div className="absolute top-0 flex h-16 w-full border-b-1 border-gray-200 pl-18">
       <div className="flex w-full items-center justify-between px-8">
         <RouteLocation />
-        <p>{userProfile?.email}</p>
+        <div className="flex items-center gap-4 font-medium">
+          <p>{userProfile?.email}</p>
+          <SignOutButton />
+        </div>
       </div>
     </div>
   );

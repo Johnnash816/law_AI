@@ -95,3 +95,15 @@ export async function signIn(formData: FormData) {
   revalidatePath("/", "layout");
   return { success: true, data: data };
 }
+
+export async function signOut() {
+  // create supabase server client
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    return { success: false, error: error.message };
+  }
+  revalidatePath("/", "layout");
+  return { success: true };
+}
