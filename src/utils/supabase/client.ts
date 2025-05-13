@@ -1,6 +1,6 @@
 // From supabase docs
 // supabase.com/docs/guides/auth/server-side/nextjs
-
+import { Database } from "@/utils/supabase/database.type";
 import { createBrowserClient } from "@supabase/ssr";
 
 export function createClient() {
@@ -19,5 +19,5 @@ export function createClient() {
     throw new Error("Missing required environment variables");
   }
 
-  return createBrowserClient(supabaseUrl, supabaseAnonKey);
+  return createBrowserClient<Database>(supabaseUrl, supabaseAnonKey);
 }

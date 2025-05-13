@@ -7,13 +7,19 @@ import DOMPurify from "dompurify";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
+import { Database } from "@/utils/supabase/database.type";
+
 // Configure marked to be more secure
 marked.setOptions({
   breaks: true, // Convert line breaks to <br>
   gfm: true, // GitHub Flavored Markdown
 });
 
-export default function Chat({ username }: { username?: string }) {
+export default function Chat({
+  username,
+}: {
+  username?: Database["public"]["Tables"]["user_profile"]["Row"]["username"];
+}) {
   // vercel supabase sdk
   const { messages, input, handleInputChange, handleSubmit } = useChat();
   // supabase client

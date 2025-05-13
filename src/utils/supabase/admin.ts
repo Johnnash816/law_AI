@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-
+import { Database } from "@/utils/supabase/database.type";
 // check if the environment is development
 const isLocalhost = process.env.NODE_ENV === "development";
 
@@ -16,9 +16,13 @@ if (!supabaseUrl || !supabaseServiceRoleKey) {
   throw new Error("Missing required environment variables");
 }
 
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
+export const supabaseAdmin = createClient<Database>(
+  supabaseUrl,
+  supabaseServiceRoleKey,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
   },
-});
+);
