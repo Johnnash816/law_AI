@@ -10,13 +10,11 @@ export default async function Page() {
   } = await supabase.auth.getUser();
 
   // get username from supabase user_profile table
-
   const { data: userProfile } = await supabase
     .from("user_profile")
     .select("username")
     .eq("id", user?.id as string)
     .single();
-
   // TODO: move this to chat route and add redirect to chat if logged in for login page
   return (
     <div className="flex h-full w-full">

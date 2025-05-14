@@ -7,7 +7,7 @@ import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import { Database } from "@/utils/supabase/database.type";
-
+import { IoArrowUp } from "react-icons/io5";
 // Configure marked to be more secure
 marked.setOptions({
   breaks: true, // Convert line breaks to <br>
@@ -79,12 +79,38 @@ export default function Chat({
       </div>
 
       <form onSubmit={handleSubmit} className="mx-auto w-[800px] pb-6">
-        <input
-          type="text"
-          value={input}
-          onChange={handleInputChange}
-          className="w-full rounded-md border-2 border-gray-300 p-2"
-        />
+        <div className="w-full rounded-2xl bg-gray-100 px-3 py-2.5">
+          <textarea
+            value={input}
+            placeholder="Say something... (Shift + Enter to new line)"
+            onChange={(e) => {
+              handleInputChange(e);
+              // make textarea auto resize
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = "auto";
+              target.style.height = `${target.scrollHeight}px`;
+            }}
+            onKeyDown={(e) => {
+              // Make pressing enter to submit instead of default new line
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                if (input.trim() !== "") {
+                  handleSubmit(e as unknown as React.FormEvent);
+                }
+              }
+            }}
+            rows={2}
+            className="max-h-[200px] w-full resize-none bg-transparent focus:outline-none"
+          />
+          <div className="flex w-full items-center justify-end bg-transparent">
+            <button
+              disabled={input.trim() === ""}
+              className="flex cursor-pointer items-center gap-2 rounded-full bg-blue-500 p-1 text-white disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <IoArrowUp size={24} />
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   );
