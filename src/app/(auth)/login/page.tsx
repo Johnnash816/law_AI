@@ -16,12 +16,12 @@ const Page = () => {
               Sign Up
             </Link>
           </div>
-          <div className="mt-2 flex items-center">
+          {/* <div className="mt-2 flex items-center">
             <h1>{`Forgot your password?`}</h1>
             <Link className="ml-2 font-bold" href="/forgot-password">
               Reset Password
             </Link>
-          </div>
+          </div> */}
         </section>
       </div>
     </>

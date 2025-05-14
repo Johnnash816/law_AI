@@ -1,7 +1,6 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import { TextField } from "@mui/material";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import { createClient } from "@/utils/supabase/client";
@@ -80,14 +79,11 @@ export default function Chat({
       </div>
 
       <form onSubmit={handleSubmit} className="mx-auto w-[800px] pb-6">
-        <TextField
-          fullWidth
-          placeholder="Say something..."
-          onChange={handleInputChange}
+        <input
+          type="text"
           value={input}
-          id="filled-basic"
-          label="Message"
-          variant="filled"
+          onChange={handleInputChange}
+          className="w-full rounded-md border-2 border-gray-300 p-2"
         />
       </form>
     </div>
