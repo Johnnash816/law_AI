@@ -17,7 +17,7 @@ export default async function Page() {
     .single();
   // TODO: move this to chat route and add redirect to chat if logged in for login page
   return (
-    <div className="flex h-full w-full">
+    <div className="h-full w-full">
       <Chat username={userProfile?.username} />
     </div>
   );

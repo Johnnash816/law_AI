@@ -16,6 +16,7 @@ export async function POST(req: Request) {
   //streamText function returns a StreamTextResult. This result object contains the toDataStreamResponse function which converts the result to a streamed response object.
   const result = streamText({
     model: openrouter.chat("deepseek/deepseek-chat-v3-0324"),
+    system: "You are a law assistant that is helping a lawyer in Hong Kong",
     messages,
   });
 

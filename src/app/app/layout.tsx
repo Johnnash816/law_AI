@@ -7,7 +7,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div className="h-full w-full">
       <AppNav />
       <AppSidebar />
       <main className="h-full w-full pt-16 pl-18">{children}</main>
