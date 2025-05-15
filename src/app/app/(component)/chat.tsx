@@ -140,7 +140,10 @@ export default function Chat({
           </div>
         )}
 
-        <form onSubmit={handleSubmitWithReset} className="mx-auto w-full pb-6">
+        <form
+          onSubmit={handleSubmitWithReset}
+          className="mx-auto w-full px-4 pb-6"
+        >
           <div className="w-full rounded-2xl bg-gray-100 px-3 py-2.5">
             <textarea
               ref={textareaRef}
@@ -166,6 +169,13 @@ export default function Chat({
               className="max-h-[200px] w-full resize-none bg-transparent focus:outline-none"
             />
             <div className="flex w-full items-center justify-end bg-transparent">
+              {/* Loading spinner when streaming and loading */}
+              {status === "streaming" ||
+                (status === "submitted" && (
+                  <div className="mx-2 h-6 w-6 animate-spin rounded-full border-2 border-gray-500 border-t-transparent" />
+                ))}
+
+              {/* Submit button or stop button */}
               {status === "submitted" || status === "streaming" ? (
                 <button
                   type="button"
