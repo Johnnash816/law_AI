@@ -4,7 +4,7 @@ import { useChat } from "@ai-sdk/react";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import { Database } from "@/utils/supabase/database.type";
-import { IoArrowUp, IoSquare } from "react-icons/io5";
+import { IoArrowUp } from "react-icons/io5";
 import { useRef, useEffect, useState } from "react";
 // Configure marked to be more secure
 marked.setOptions({
