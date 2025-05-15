@@ -170,10 +170,9 @@ export default function Chat({
             />
             <div className="flex w-full items-center justify-end bg-transparent">
               {/* Loading spinner when streaming and loading */}
-              {status === "streaming" ||
-                (status === "submitted" && (
-                  <div className="mx-2 h-6 w-6 animate-spin rounded-full border-2 border-gray-500 border-t-transparent" />
-                ))}
+              {(status === "streaming" || status === "submitted") && (
+                <div className="mx-2 h-6 w-6 animate-spin rounded-full border-2 border-gray-500 border-t-transparent" />
+              )}
 
               {/* Submit button or stop button */}
               {status === "submitted" || status === "streaming" ? (
