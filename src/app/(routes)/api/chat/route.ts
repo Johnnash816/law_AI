@@ -1,6 +1,8 @@
 //import { openai } from "@ai-sdk/openai";
+"use server";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { streamText } from "ai";
+import { createClient } from "@/utils/supabase/server";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -10,6 +12,19 @@ const openrouter = createOpenRouter({
 });
 
 export async function POST(req: Request) {
+  // Check authentication
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
   //extract messages from post request
   const { messages } = await req.json();
 

@@ -36,6 +36,10 @@ export async function signUp(formData: FormData) {
   // If user confirmation is disabled, auth.user will create a user with a session (logged in)
   // A user will be created in user_profile
   // When sign up using existing email, auth.signup will return user exist error
+
+  // Can use supabase admin to directly create a user in user_profile, without signing in if we do not use
+  // auth.signup but use admin functions only
+
   const { data, error } = await supabase.auth.signUp({
     email: credentials.email,
     password: credentials.password,
@@ -57,6 +61,7 @@ export async function signUp(formData: FormData) {
         id: data.user.id,
         username: credentials.username,
         email: credentials.email,
+        role: "normal",
       },
     ]);
 

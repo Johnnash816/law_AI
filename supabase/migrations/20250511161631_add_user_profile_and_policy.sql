@@ -1,3 +1,5 @@
+-- Create user_profile table that is linked to auth.users
+
 create table "public"."user_profile" (
     "id" uuid not null default auth.uid(),
     "username" text not null default ''::text,

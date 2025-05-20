@@ -1,6 +1,7 @@
 // From supabase docs
 // supabase.com/docs/guides/auth/server-side/nextjs
 
+import { isAdminRoute, isPublicRoute } from "@/lib/routes";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -54,27 +55,61 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (
-    !user &&
-    // routes that don't require authentication
-    !request.nextUrl.pathname.includes("/login") &&
-    !request.nextUrl.pathname.includes("/register") &&
-    !request.nextUrl.pathname.includes("/forgot-password")
-  ) {
-    console.log(user);
-    // no user, respond by redirecting the user to the login page
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
+  // All API/... routes can only be accessed by logged in users
+  if (request.nextUrl.pathname.startsWith("/api/")) {
+    if (!user) {
+      return new NextResponse(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+    return supabaseResponse;
+  }
+
+  // If not logged in
+  if (!user) {
+    // Access to non-public routes will redirect to login
+    if (!isPublicRoute(request.nextUrl.pathname)) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      return NextResponse.redirect(url);
+    }
+  }
+
+  //If logged in
+  if (user) {
+    // home route and public routes will redirect to app
+    if (
+      request.nextUrl.pathname === "/" ||
+      isPublicRoute(request.nextUrl.pathname)
+    ) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/app";
+      return NextResponse.redirect(url);
+    }
+
+    // If try to access admin route
+    if (isAdminRoute(request.nextUrl.pathname)) {
+      // Check if user is admin, if not admin redirect to app
+      const { data: userProfile } = await supabase
+        .from("user_profile")
+        .select("role")
+        .eq("id", user.id)
+        .single();
+
+      if (userProfile?.role !== "admin") {
+        const url = request.nextUrl.clone();
+        url.pathname = "/app";
+        return NextResponse.redirect(url);
+      }
+    }
   }
 
   // If user is logged in homepage and all auth routes redirect to /app
   if (
     user &&
     (request.nextUrl.pathname === "/" ||
-      request.nextUrl.pathname.includes("/login") ||
-      request.nextUrl.pathname.includes("/register") ||
-      request.nextUrl.pathname.includes("/forgot-password"))
+      isPublicRoute(request.nextUrl.pathname))
   ) {
     const url = request.nextUrl.clone();
     url.pathname = "/app";
