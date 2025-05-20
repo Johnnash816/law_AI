@@ -1,11 +1,12 @@
 //import { openai } from "@ai-sdk/openai";
 "use server";
+
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { streamText } from "ai";
 import { createClient } from "@/utils/supabase/server";
 
 // Allow streaming responses up to 30 seconds
-export const maxDuration = 30;
+//export const maxDuration = 30;
 
 const openrouter = createOpenRouter({
   apiKey: process.env.OPEN_ROUTER_API_KEY,

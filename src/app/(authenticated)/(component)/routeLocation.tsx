@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 const pathNames = {
+  "/admin": "Admin",
   "/app": "Chat",
   "/search": "Semantic Search",
 };
