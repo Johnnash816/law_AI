@@ -112,3 +112,24 @@ export async function signOut() {
   revalidatePath("/", "layout");
   return { success: true };
 }
+
+export async function test() {
+  // Create a promise that resolves after 90 seconds
+  const timeoutPromise = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        success: true,
+        message: "Operation completed after 90 seconds",
+      });
+    }, 90000);
+  });
+
+  try {
+    // Wait for the timeout
+    const result = await timeoutPromise;
+    revalidatePath("/", "layout");
+    return result;
+  } catch (error) {
+    return { success: false, error: error };
+  }
+}
