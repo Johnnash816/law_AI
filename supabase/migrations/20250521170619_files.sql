@@ -19,7 +19,7 @@ begin
   end;
 $$;
 
-create policy "Users can upload files to judgements bucket if they are admin"
+create policy "Admin Users can upload files to judgements with owner as their uuid"
 on storage.objects for insert to authenticated with check (
   bucket_id = 'judgements' 
   and owner = auth.uid()

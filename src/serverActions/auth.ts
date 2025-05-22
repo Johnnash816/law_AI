@@ -114,6 +114,7 @@ export async function signOut() {
 }
 
 export async function test() {
+  console.log("Intest");
   // Create a promise that resolves after 90 seconds
   const timeoutPromise = new Promise((resolve) => {
     setTimeout(() => {
@@ -126,10 +127,13 @@ export async function test() {
 
   try {
     // Wait for the timeout
+    console.log("timeout exec");
     const result = await timeoutPromise;
+    console.log("time out finish");
     revalidatePath("/", "layout");
     return { success: true, result: result };
   } catch (error) {
     return { success: false, error: error };
+    console.log(error);
   }
 }
