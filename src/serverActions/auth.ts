@@ -128,7 +128,7 @@ export async function test() {
     // Wait for the timeout
     const result = await timeoutPromise;
     revalidatePath("/", "layout");
-    return result;
+    return { success: true, result: result };
   } catch (error) {
     return { success: false, error: error };
   }
