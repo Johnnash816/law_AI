@@ -1,6 +1,6 @@
 "use client";
-//import { signOut } from "@/serverActions/auth";
-import { test } from "@/serverActions/auth";
+import { signOut } from "@/serverActions/auth";
+
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -11,8 +11,8 @@ const SignOutButton = () => {
   const handleSignOut = async () => {
     console.log("Signing out");
     setIsLoading(true);
-    //const { success } = await signOut();
-    const { success } = await test();
+    const { success } = await signOut();
+
     if (success) {
       router.push("/login");
     }
